@@ -18,13 +18,16 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (initializing) return;
-    const inAuthGroup = segments[0] === "(auth)";
     
+    if (segments[0] !=='(onboarding)') {
+      const inAuthGroup = segments[0] === "(auth)";
     if (!user && !inAuthGroup) {
       router.replace("/(auth)/login");
     } else if (user && inAuthGroup) {
       router.replace("/screens/home");
     }
+    }
+
   }, [user, initializing]);
 
   return (
