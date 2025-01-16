@@ -1,28 +1,30 @@
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
-import { signInWithEmailAndPassword } from '@react-native-firebase/auth'
-import auth from '@react-native-firebase/auth'
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { createUserWithEmailAndPassword } from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
+import { useRouter } from 'expo-router';
 
-const Login = () => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-  
-  const signIn = () => {
-    setIsLoading(true)
-    signInWithEmailAndPassword(auth(), email, password)
+export default function Register() {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const register = () => {
+    setIsLoading(true);
+    createUserWithEmailAndPassword(auth(), email, password)
       .then((userCredential) => {
-        setIsLoading(false)
+        setIsLoading(false);
       })
       .catch((error) => {
-        setIsLoading(false)
-        console.error(error)
-      })
-  }
+        setIsLoading(false);
+        console.error(error);
+      });
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome Back</Text>
+      <Text style={styles.title}>Create Account</Text>
       
       <TextInput
         style={styles.input}
@@ -43,15 +45,21 @@ const Login = () => {
       
       <TouchableOpacity 
         style={styles.button}
-        onPress={signIn}
+        onPress={register}
         disabled={isLoading}
       >
         <Text style={styles.buttonText}>
-          {isLoading ? "Loading..." : "Sign In"}
+          {isLoading ? "Loading..." : "Register"}
         </Text>
       </TouchableOpacity>
+
+      <TouchableOpacity 
+        onPress={() => router.push('/(auth)/login')}
+      >
+        <Text style={styles.linkText}>Already have an account? Login</Text>
+      </TouchableOpacity>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -88,6 +96,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
-})
-
-export default Login
+  linkText: {
+    color: '#007AFF',
+    marginTop: 15,
+  },
+}); 

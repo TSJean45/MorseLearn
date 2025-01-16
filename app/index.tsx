@@ -1,14 +1,5 @@
-import { StyleSheet, Text, View } from "react-native";
-import Login from "./screens/Login";
+import { Redirect } from 'expo-router';
 
 export default function Index() {
-  return <Login />;
+  return <Redirect href="/(auth)/login" />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});

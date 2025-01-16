@@ -1,30 +1,30 @@
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
-import { createUserWithEmailAndPassword } from '@react-native-firebase/auth';
+import { signInWithEmailAndPassword } from '@react-native-firebase/auth';
 import auth from '@react-native-firebase/auth';
+import { useRouter } from 'expo-router';
 
-const Register = () => {
+export default function Login() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  const register = () => {
+  
+  const signIn = () => {
     setIsLoading(true);
-    createUserWithEmailAndPassword(auth(), email, password)
+    signInWithEmailAndPassword(auth(), email, password)
       .then((userCredential) => {
         setIsLoading(false);
-        // Handle successful registration (e.g., navigate to another screen)
       })
       .catch((error) => {
         setIsLoading(false);
-        console.error(error); // Log the error for debugging
-        // Optionally, show an error message to the user
+        console.error(error);
       });
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Create Account</Text>
+      <Text style={styles.title}>Welcome Back</Text>
       
       <TextInput
         style={styles.input}
@@ -45,16 +45,22 @@ const Register = () => {
       
       <TouchableOpacity 
         style={styles.button}
-        onPress={register}
+        onPress={signIn}
         disabled={isLoading}
       >
         <Text style={styles.buttonText}>
-          {isLoading ? "Loading..." : "Register"}
+          {isLoading ? "Loading..." : "Sign In"}
         </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity 
+        onPress={() => router.push('/(auth)/register')}
+      >
+        <Text style={styles.linkText}>Don't have an account? Register</Text>
       </TouchableOpacity>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -90,6 +96,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
-});
-
-export default Register; 
+  linkText: {
+    color: '#007AFF',
+    marginTop: 15,
+  },
+}); 
