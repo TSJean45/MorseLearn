@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { createUserWithEmailAndPassword } from '@react-native-firebase/auth';
 import auth from '@react-native-firebase/auth';
 import { useRouter } from 'expo-router';
+import { COLORS } from '@/constants/Colors';
 
 export default function Register() {
   const router = useRouter();
@@ -25,7 +26,7 @@ export default function Register() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Create Account</Text>
-      
+      <Image source={require("../../assets/images/dark-logo.png")} style={styles.logo} />
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -66,6 +67,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
+    backgroundColor: COLORS.red,
     alignItems: "center",
     padding: 20,
   },
