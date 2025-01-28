@@ -43,20 +43,20 @@ export default function Welcome() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.pink,
+    backgroundColor: COLORS.red,
   },
   topSection: {
-    flex: 0.8,
-    backgroundColor: COLORS.red,
-    borderBottomLeftRadius: 50,
-    borderBottomRightRadius: 50,
+    flex: 0.75,
     justifyContent: "space-evenly",
     alignItems: "center",
     overflow: "hidden",
     padding: 10
   },
   bottomSection: {
-    flex: 0.2,
+    backgroundColor: COLORS.pink,
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+    flex: 0.25,
     padding: 20
   },
   logo: {

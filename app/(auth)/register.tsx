@@ -1,5 +1,6 @@
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { Text, Image, Button, Input } from '@rneui/themed';
+import { useState } from 'react';
 import { createUserWithEmailAndPassword } from '@react-native-firebase/auth';
 import auth from '@react-native-firebase/auth';
 import { useRouter } from 'expo-router';
@@ -25,40 +26,49 @@ export default function Register() {
 
   return (
     <View style={styles.container}>
+      <Image 
+        source={require("../../assets/images/light-logo.png")} 
+        style={styles.logo}
+        resizeMode="contain"
+      />
       <Text style={styles.title}>Create Account</Text>
-      <Image source={require("../../assets/images/dark-logo.png")} style={styles.logo} />
-      <TextInput
-        style={styles.input}
+      
+      <Input
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
         autoCapitalize="none"
+        containerStyle={styles.inputContainer}
+        inputStyle={styles.input}
+        leftIcon={{ type: 'material', name: 'email', color: COLORS.text.primary }}
       />
       
-      <TextInput
-        style={styles.input}
+      <Input
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
+        containerStyle={styles.inputContainer}
+        inputStyle={styles.input}
+        leftIcon={{ type: 'material', name: 'lock', color: COLORS.text.primary }}
       />
       
-      <TouchableOpacity 
-        style={styles.button}
+      <Button
+        title={isLoading ? "Creating Account..." : "Register"}
         onPress={register}
-        disabled={isLoading}
-      >
-        <Text style={styles.buttonText}>
-          {isLoading ? "Loading..." : "Register"}
-        </Text>
-      </TouchableOpacity>
+        loading={isLoading}
+        buttonStyle={styles.button}
+        titleStyle={styles.buttonText}
+        containerStyle={styles.buttonContainer}
+      />
 
-      <TouchableOpacity 
+      <Button
+        title="Already have an account? Login"
         onPress={() => router.push('/(auth)/login')}
-      >
-        <Text style={styles.linkText}>Already have an account? Login</Text>
-      </TouchableOpacity>
+        type="clear"
+        titleStyle={styles.linkText}
+      />
     </View>
   );
 }
@@ -66,40 +76,47 @@ export default function Register() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    backgroundColor: COLORS.red,
-    alignItems: "center",
+    backgroundColor: COLORS.pink,
+    alignItems: 'center',
     padding: 20,
+    justifyContent: 'center',
+  },
+  logo: {
+    width: 120,
+    height: 120,
+    marginBottom: 20,
   },
   title: {
-    fontSize: 24,
-    fontWeight: "bold",
+    fontSize: 28,
+    fontWeight: '700',
+    color: COLORS.text.primary,
     marginBottom: 30,
   },
+  inputContainer: {
+    width: '100%',
+    paddingHorizontal: 0,
+    marginVertical: 5,
+    backgroundColor: 'transparent',
+  },
   input: {
-    width: "100%",
-    height: 50,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 8,
-    paddingHorizontal: 15,
-    marginBottom: 15,
+    color: COLORS.text.primary,
+    paddingLeft: 10,
+  },
+  buttonContainer: {
+    width: '100%',
+    marginTop: 10,
   },
   button: {
-    width: "100%",
-    height: 50,
-    backgroundColor: "#007AFF",
-    borderRadius: 8,
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: COLORS.red,
+    borderRadius: 25,
+    paddingVertical: 15,
   },
   buttonText: {
-    color: "white",
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: '600',
+    color: COLORS.text.light,
   },
   linkText: {
-    color: '#007AFF',
-    marginTop: 15,
+    color: COLORS.red
   },
 }); 
